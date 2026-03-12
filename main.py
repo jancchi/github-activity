@@ -58,7 +58,7 @@ def main():
 
                 url = f"https://api.github.com/repos/{owner}/{repo}"
 
-                if(requests.get(url).status_code != 200):
+                if requests.get(url).status_code != 200:
                     print("Wrong repo")
                     break
 
@@ -73,6 +73,10 @@ def main():
                     commits = requests.get(url+ "/commits").json()
                     print(commits[0]["commit"]["author"].keys())
                     print("\n".join([x["commit"]["author"]["date"] + " " + x["commit"]["author"]["name"] + " " + x["commit"]["message"].split('\n')[0] for x in commits[:5]]))
+                elif choice == "2":
+                    contributors = requests.get(url+ "/contributors").json()
+                    print(contributors[0].keys())
+                    print("\n".join([x["login"] for x in contributors[:5]]))
         else:
             print("Wrong choice")
 
